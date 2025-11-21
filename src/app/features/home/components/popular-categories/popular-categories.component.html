@@ -1,0 +1,18 @@
+<section class="py-14">
+  <div class="container">
+    <h2 class="text-4xl mb-6">Shop Popular Categories</h2>
+
+    <owl-carousel-o [options]="categoriesOptions">
+      <ng-template carouselSlide *ngFor="let category of categoriesList" [id]="category._id">
+        <div class="border border-green-700 rounded p-2 mx-2">
+          <img
+            [src]="category.image"
+            class="w-full h-64 object-cover rounded"
+            [alt]="category.name"
+          />
+          <h3 class="mt-2 text-center font-semibold">{{ category.name }}</h3>
+        </div>
+      </ng-template>
+    </owl-carousel-o>
+  </div>
+</section>
