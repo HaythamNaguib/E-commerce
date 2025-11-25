@@ -6,12 +6,9 @@ import { environment } from '../../../../environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsService {
-  // injecion httpclient
-  private readonly httpcliene = inject(HttpClient)
-  getAllProducts(PageNumbuer: number = 1): Observable<any> {
-    return this.httpcliene.get(environment.baseUrl + `products?page=${PageNumbuer}`);
-
+export class ProductDetailsService {
+  private readonly httpClient = inject(HttpClient);
+  getProudectDetails(id: string | null): Observable<any> {
+    return this.httpClient.get(environment.baseUrl + `products/${id}`)
   }
-
 }

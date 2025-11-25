@@ -20,12 +20,18 @@ export class PopularCategoriesComponent implements OnInit {
 
   categoriesOptions: OwlOptions = {
     loop: true,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     dots: false,
     navSpeed: 700,
-    navText: ['', ''],
+
+    navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+    nav: true,
+    rtl: false,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
     responsive: {
       0: {
         items: 1,
@@ -43,30 +49,26 @@ export class PopularCategoriesComponent implements OnInit {
         items: 6,
       },
     },
-    nav: false,
+
   };
 
-  ngOnInit(): void {
-    console.log("inside .....................");
 
+
+  CategoriesList: Category[] = [];
+
+  ngOnInit(): void {
     this.getAllCategoriesData();
   }
 
-
   getAllCategoriesData(): void {
     this.categoriesService.getAllCategories().subscribe({
-      next: (res: any) => {
-        console.log('Categories API Response:', res);
-        console.log('Categories data:', res.data);
-
-        if (res && res.data) {
-          this.categoriesList = res.data;
-          console.log('Categories list length:', this.categoriesList.length);
-        }
+      next: (res) => {
+        console.log(res.data); //{() , {} ,{}}
+        this.categoriesList = res.data;
       },
-      error: (err: any) => {
-        console.error('Error loading categories:', err);
-      }
+      error: (err) => {
+        console.log(err);
+      },
     });
   }
 }

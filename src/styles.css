@@ -1,6 +1,11 @@
 @import "tailwindcss";
-
 @import "../node_modules/flowbite";
+
+
+body {
+  font-family: Arial, sans-serif !important;
+}
+
 
 
 

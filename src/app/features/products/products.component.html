@@ -1,1 +1,27 @@
-<p>products works!</p>
+<section class="bg-gray-100 py-16 border border-gray-300">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+    <!-- TITLE -->
+    <div class="text-left mb-10">
+      <h2 class="text-2xl md:text-3xl text-green-800 font-[Edu NSW ACT Cursive] tracking-wide inline-block relative">
+         Products list
+        <span class="absolute left-0 -bottom-2 w-20 h-[3px] bg-green-700 rounded"></span>
+      </h2>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+      @for (product of productslist |paginate: { id: 'foo',
+                                                      itemsPerPage: pageSize,
+                                                      currentPage: p,
+                                                      totalItems: total }  ; track product.id) {
+        <app-card [product]="product" class="transition-transform duration-300 hover:scale-105"></app-card>
+      }
+    </div>
+    <div class="flex justify-center mt-4">
+      <pagination-controls class="my-pagination" id="foo" (pageChange)=" getAllProductsData($event)">
+</pagination-controls>
+
+    </div>
+  </div>
+</section>
