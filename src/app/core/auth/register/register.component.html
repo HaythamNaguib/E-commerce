@@ -1,1 +1,152 @@
-<p>register works!</p>
+<div class="bg-gray-200 min-h-screen">
+  <section class="bg-white border-t-4 border-gray-300 items-center justify-center p-8 shadow-sm md:w-1/2 mx-auto">
+    <h1 class="text-center mb-6 font-light text-4xl" style="font-family: 'Arial, sans-serif', cursive;">Register Now</h1>
+
+    @let namecontrol = registerForm.get("name");
+    @let emailcontrol = registerForm.get("email");
+    @let passwordcontrol = registerForm.get("password");
+    @let rePasswordcontrol = registerForm.get("rePassword");
+    @let phonecontrol = registerForm.get("phone");
+
+    <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+
+      <!-- Name Field -->
+      <div class="relative mb-1">
+        <input formControlName="name" type="text" id="name" class="block rounded-t-base px-2.5 pb-2.5 pt-5 w-full text-sm text-heading bg-neutral-secondary-medium border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " />
+        <label for="name" class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[left] start-2.5 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Name</label>
+
+        @if (namecontrol?.errors && namecontrol?.touched) {
+          <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="mt-1.5 list-disc list-inside">
+                @if (namecontrol?.getError('required')) {
+                  <li>Name is required</li>
+                }
+                @else if (namecontrol?.getError('minlength')) {
+                  <li>Name should be at least 2 characters</li>
+                }
+                @else if (namecontrol?.getError('maxlength')) {
+                  <li>Name should not exceed 20 characters</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Email Field -->
+      <div class="relative mb-1">
+        <input formControlName="email" type="email" id="email" class="block rounded-t-base px-2.5 pb-2.5 pt-5 w-full text-sm text-heading bg-neutral-secondary-medium border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " />
+        <label for="email" class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[left] start-2.5 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email</label>
+
+        @if (emailcontrol?.errors && emailcontrol?.touched) {
+          <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="mt-1.5 list-disc list-inside">
+                @if (emailcontrol?.getError('required')) {
+                  <li>Email is required</li>
+                }
+                @else if (emailcontrol?.getError('email')) {
+                  <li>Please enter a valid email address</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="relative mb-1">
+        <input formControlName="password" type="password" id="password" class="block rounded-t-base px-2.5 pb-2.5 pt-5 w-full text-sm text-heading bg-neutral-secondary-medium border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " />
+        <label for="password" class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[left] start-2.5 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Password</label>
+
+        @if (passwordcontrol?.errors && passwordcontrol?.touched) {
+          <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="mt-1.5 list-disc list-inside">
+                @if (passwordcontrol?.getError('required')) {
+                  <li>Password is required</li>
+                }
+                @else if (passwordcontrol?.getError('pattern')) {
+                  <li>Password must be at least 6 characters (letters, numbers, _ or $)</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- RePassword Field -->
+      <div class="relative mb-1">
+        <input formControlName="rePassword" type="password" id="rePassword" class="block rounded-t-base px-2.5 pb-2.5 pt-5 w-full text-sm text-heading bg-neutral-secondary-medium border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " />
+        <label for="rePassword" class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[left] start-2.5 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Confirm Password</label>
+
+        @if (rePasswordcontrol?.errors && rePasswordcontrol?.touched) {
+          <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="mt-1.5 list-disc list-inside">
+                @if (rePasswordcontrol?.getError('required')) {
+                  <li>Please confirm your password</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+
+        @if (registerForm.errors?.['passwordMismatch'] && rePasswordcontrol?.touched) {
+          <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="mt-1.5 list-disc list-inside">
+                <li>Passwords do not match</li>
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Phone Field -->
+      <div class="relative mb-1">
+        <input formControlName="phone" type="tel" id="phone" class="block rounded-t-base px-2.5 pb-2.5 pt-5 w-full text-sm text-heading bg-neutral-secondary-medium border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " />
+        <label for="phone" class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[left] start-2.5 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Phone</label>
+
+        @if (phonecontrol?.errors && phonecontrol?.touched) {
+          <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="mt-1.5 list-disc list-inside">
+                @if (phonecontrol?.getError('required')) {
+                  <li>Phone number is required</li>
+                }
+                @else if (phonecontrol?.getError('pattern')) {
+                  <li>Please enter a valid Egyptian phone number</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+
+      <button
+        [disabled]="registerForm.invalid"
+        class="disabled:bg-gray-500 disabled:cursor-not-allowed bg-green-600 text-white py-3 w-full cursor-pointer hover:bg-green-700 transition-all duration-300"
+        type="submit"
+        style="font-family: 'Arial, sans-serif', cursive; font-size: 1.125rem;">
+        Register
+      </button>
+
+    </form>
+
+  </section>
+
+  <section class="text-center mt-8 pb-8">
+    <h2 class="text-2xl mb-2" style="font-family: 'Arial, sans-serif', cursive;">Get The Lacare.egy App</h2>
+    <p class="text-gray-600 text-sm" style="font-family: 'Brush Script MT', cursive;">
+      We Will Send You a Link, Open it on Your Phone to download the app
+    </p>
+  </section>
+</div>
