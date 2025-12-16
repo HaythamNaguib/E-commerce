@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { CategoriesService } from './../../../../core/services/categories/categories.service';
 import { Category } from '../../../../core/models/category.interface';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -9,7 +9,7 @@ import { log } from 'console';
 @Component({
   selector: 'app-popular-categories',
   standalone: true,
-  imports: [CarouselModule, CommonModule],
+  imports: [CarouselModule],
   templateUrl: './popular-categories.component.html',
   styleUrl: './popular-categories.component.css'
 })

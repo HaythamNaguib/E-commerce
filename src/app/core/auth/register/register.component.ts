@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-register',
@@ -12,37 +12,20 @@ export class RegisterComponent {
     name: new FormControl(null, [
       Validators.required,
       Validators.minLength(2),
-      Validators.maxLength(20)
+      Validators.maxLength(20),
     ]),
-    email: new FormControl(null, [
-      Validators.required,
-      Validators.email
-    ]),
-    password: new FormControl(null, [
-      Validators.required,
-      Validators.pattern(/^[a-zA-Z0-9_$]{6,}$/)
-    ]),
-    rePassword: new FormControl(null, [
-      Validators.required
-    ]),
-    phone: new FormControl(null, [
-      Validators.required,
-      Validators.pattern(/^01[0125][0-9]{8}$/)
-    ])
-  }, { validators: this.passwordMatchValidator() });
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [Validators.required, Validators.pattern(/^[\w@$!%*?&]{6,}$/)]),
+    rePassword: new FormControl(null, [Validators.required]),
+    phone: new FormControl(null, [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)])
+  }, {
+    validators: this.confirmPassword
+  });
 
-  // Custom validator للتحقق من تطابق الباسوورد
-  passwordMatchValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const password = control.get('password');
-      const rePassword = control.get('rePassword');
-
-      if (!password || !rePassword) {
-        return null;
-      }
-
-      return password.value === rePassword.value ? null : { passwordMismatch: true };
-    };
+  confirmPassword(group: AbstractControl) {
+    return group.get('password')?.value === group.get('rePassword')?.value
+      ? null
+      : { mismatch: true };
   }
 
   submitForm(): void {
