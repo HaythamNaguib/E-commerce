@@ -132,13 +132,19 @@
       </div>
 
       <button
-        [disabled]="registerForm.invalid"
+        [disabled]="isLoading"
         class="disabled:bg-gray-500 disabled:cursor-not-allowed bg-green-600 text-white py-3 w-full cursor-pointer hover:bg-green-700 transition-all duration-300"
         type="submit"
         style="font-family: 'Arial, sans-serif', cursive; font-size: 1.125rem;">
         Register
+       @if (isLoading) {
+               <span> <i class="fas fa-spinner animate-spin"></i> </span>
+       }
       </button>
+      @if (masError) {
+        <p class="text-center text-red-900 mt-4 p-4 bg-red-200">{{masError}}</p>
 
+}
     </form>
 
   </section>

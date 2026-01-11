@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,6 +9,9 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+  private readonly authService = inject(AuthService);
+  masError: string = '';
+  isLoading: boolean = false;
   registerForm: FormGroup = new FormGroup({
     name: new FormControl(null, [
       Validators.required,
@@ -31,14 +35,21 @@ export class RegisterComponent {
   submitForm(): void {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
-      // هنا تقدر تبعت الداتا للـ API
-      // Example:
-      // this.authService.register(this.registerForm.value).subscribe(...)
-    } else {
-      // Mark all fields as touched to show validation errors
-      Object.keys(this.registerForm.controls).forEach(key => {
-        this.registerForm.get(key)?.markAsTouched();
-      });
+      this.isLoading = true;
+      this.authService.registerForm(this.registerForm.value).subscribe({
+        next: (res) => {
+          console.log(res);
+          if (res.message === "success") {
+          }
+          this.isLoading = false;
+
+        },
+        error: (err) => {
+          console.log(err);
+          this.masError = err.error.message;
+          this.isLoading = false;
+        }
+      })
     }
   }
 }

@@ -10,9 +10,14 @@ import { FormGroup } from '@angular/forms';
 })
 export class AuthService {
   private readonly httpClient = inject(HttpClient)
-  registerForm(): Observable<any> {
-    return this.httpClient.post(environment.baseUrl + `auth/signup`, FormGroup)
+  registerForm(data: object): Observable<any> {
+    return this.httpClient.post(environment.baseUrl + `auth/signup`, data)
 
-  }
+  };
+
+  loginForm(data: object): Observable<any> {
+    return this.httpClient.post(environment.baseUrl + `auth/signin`, data)
+
+  };
 
 }
