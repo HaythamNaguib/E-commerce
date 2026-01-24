@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,18 +11,22 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterComponent {
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+
   masError: string = '';
   isLoading: boolean = false;
-  registerForm: FormGroup = new FormGroup({
-    name: new FormControl(null, [
+
+  registerForm = this.fb.group({
+    name: [null, [
       Validators.required,
       Validators.minLength(2),
       Validators.maxLength(20),
-    ]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required, Validators.pattern(/^[\w@$!%*?&]{6,}$/)]),
-    rePassword: new FormControl(null, [Validators.required]),
-    phone: new FormControl(null, [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)])
+    ]],
+    email: [null, [Validators.required, Validators.email]],
+    password: [null, [Validators.required, Validators.pattern(/^[\w@$!%*?&]{6,}$/)]],
+    rePassword: [null, [Validators.required]],
+    phone: [null, [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]]
   }, {
     validators: this.confirmPassword
   });
@@ -34,22 +39,34 @@ export class RegisterComponent {
 
   submitForm(): void {
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-      this.isLoading = true;
-      this.authService.registerForm(this.registerForm.value).subscribe({
-        next: (res) => {
-          console.log(res);
-          if (res.message === "success") {
-          }
-          this.isLoading = false;
+    } else {
+      // show all errors
+      this.registerForm.setErrors({ mismatch: true });
+      this.registerForm.get('rePassword')?.patchValue(null);
+      this.registerForm.markAllAsTouched();
+    };
 
-        },
-        error: (err) => {
-          console.log(err);
-          this.masError = err.error.message;
-          this.isLoading = false;
+    console.log(this.registerForm.value);
+    this.isLoading = true;
+
+    this.authService.registerForm(this.registerForm.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res.message === "success") {
+          setTimeout(() => {
+            this.masError = '';
+            this.router.navigate(['/login']);
+          }, 1000);
         }
-      })
-    }
+        this.isLoading = false;
+
+      },
+      error: (err) => {
+        console.log(err);
+        this.masError = err.error.message;
+        this.isLoading = false;
+      }
+    })
   }
 }
+
