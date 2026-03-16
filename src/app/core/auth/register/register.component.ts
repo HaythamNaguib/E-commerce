@@ -1,19 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { InputComponent } from "../../../shared/components/input/input.component";
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
 
+  flag: boolean = true;
   masError: string = '';
   isLoading: boolean = false;
 
@@ -31,11 +33,22 @@ export class RegisterComponent {
     validators: this.confirmPassword
   });
 
-  confirmPassword(group: AbstractControl) {
-    return group.get('password')?.value === group.get('rePassword')?.value
-      ? null
-      : { mismatch: true };
+  ngOnInit(): void {
+
   }
+
+  confirmPassword(group: AbstractControl) {
+    if (group.get('password')?.value === group.get('rePassword')?.value) {
+      return null;
+    }
+    else {
+      group.get('rePassword')?.setErrors({ mismatch: true });
+      return { mismatch: true };
+    }
+  }
+
+
+
 
   submitForm(): void {
     if (this.registerForm.valid) {
@@ -69,4 +82,3 @@ export class RegisterComponent {
     })
   }
 }
-

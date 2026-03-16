@@ -1,0 +1,53 @@
+  <div class="relative mb-1">
+    <input
+      [class]="{'border-green-700': control?.valid, 'border-red-700': control?.invalid && control?.touched}"
+      [formControl]="control"
+      [type]="typeInput || (flag? 'password' : 'text')"
+      [id]="idInput"
+      class="block rounded-t-base px-2.5 pb-2.5 pt-5 w-full text-sm text-heading bg-neutral-secondary-medium border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+      placeholder=" " />
+
+    <label
+      for="{{idInput}}"
+      class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[left] start-2.5 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">
+      {{labelInput}}
+    </label>
+  @if (idInput === 'password'|| idInput === 'rePassword') {
+ <span (click)="!flag = !flag" class="absolute -top-1/2 -translate-y-0.5 -end-3 cursor-pointer
+    text-gray-600">
+-
+      <i class="fas fa-eye"></i>
+    </span>
+  }
+
+
+    @if (control?.invalid && control?.touched) {
+      <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+        <span class="sr-only">Danger</span>
+        <div>
+          <div class="mt-1.5 list-disc list-inside">
+            <ul>
+              @if (control?.hasError('required')) {
+                <li>Input is required.</li>
+              }
+              @if (control?.hasError('minlength')) {
+                <li>Input should be more than or equal {{control?.errors?.['minlength']?.requiredLength}} chars.</li>
+              }
+              @if (control?.hasError('maxlength')) {
+                <li>Input should be less than or equal {{control?.errors?.['maxlength']?.requiredLength}} chars.</li>
+              }
+              @if (control?.hasError('email')) {
+                <li>Please enter a valid email address.</li>
+              }
+              @if (control?.hasError('pattern')) {
+                <li> <ng-content /></li>
+              }
+              @if (control?.hasError('mismatch')) {
+    <li>Password confirmation is incorrect.</li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
