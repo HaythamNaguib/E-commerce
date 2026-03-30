@@ -1,1 +1,121 @@
-<p>cart works!</p>
+<section class="min-h-screen bg-gray-100 py-10 px-4">
+  <div class="mx-auto max-w-6xl">
+
+    <h1 class="text-3xl font-semibold text-green-800 mb-8">🛒 My Cart</h1>
+
+    <!-- Loading -->
+    @if (isLoading) {
+      <div class="flex justify-center items-center py-20">
+        <i class="fas fa-spinner animate-spin text-green-600 text-4xl"></i>
+      </div>
+    }
+
+    <!-- Empty Cart -->
+    @if (!isLoading && cartItems.length === 0) {
+      <div class="flex flex-col items-center justify-center py-24 text-center">
+        <i class="fas fa-shopping-cart text-gray-300 text-8xl mb-6"></i>
+        <h2 class="text-2xl font-medium text-gray-500 mb-2">Your cart is empty</h2>
+        <p class="text-gray-400 mb-6">Add some products to get started!</p>
+        <a routerLink="/products"
+          class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-all duration-300">
+          Browse Products
+        </a>
+      </div>
+    }
+
+    <!-- Cart Content -->
+    @if (!isLoading && cartItems.length > 0) {
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Items List -->
+        <div class="lg:col-span-2 space-y-4">
+          @for (item of cartItems; track item.product._id) {
+            <div class="bg-white rounded-lg shadow-sm p-4 flex gap-4 items-center">
+
+              <!-- Image -->
+              <img
+                [src]="item.product.imageCover"
+                [alt]="item.product.title"
+                class="w-24 h-24 object-contain rounded-md border border-gray-100 p-1 bg-gray-50"
+              />
+
+              <!-- Info -->
+              <div class="flex-1 min-w-0">
+                <h3 class="font-medium text-gray-800 line-clamp-2 text-sm mb-1">
+                  {{ item.product.title }}
+                </h3>
+                <p class="text-green-700 font-semibold text-base">
+                  {{ item.price }} EGP
+                </p>
+              </div>
+
+              <!-- Quantity Controls -->
+              <div class="flex items-center gap-2 border border-gray-300 rounded-md px-2 py-1">
+                <button
+                  (click)="updateQuantity(item.product._id, item.count - 1)"
+                  [disabled]="item.count <= 1"
+                  class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition">
+                  <i class="fas fa-minus text-xs"></i>
+                </button>
+                <span class="w-8 text-center font-semibold text-gray-800">{{ item.count }}</span>
+                <button
+                  (click)="updateQuantity(item.product._id, item.count + 1)"
+                  class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition">
+                  <i class="fas fa-plus text-xs"></i>
+                </button>
+              </div>
+
+              <!-- Remove -->
+              <button
+                (click)="removeItem(item.product._id)"
+                class="text-red-400 hover:text-red-600 transition  ml-2">
+                <i class="fas fa-trash text-lg"></i>
+              </button>
+
+            </div>
+          }
+        </div>
+
+        <!-- Order Summary -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-lg shadow-sm p-6 sticky top-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 pb-3 border-b border-gray-100">
+              Order Summary
+            </h2>
+
+            <div class="space-y-3 text-sm text-gray-600 mb-4">
+              <div class="flex justify-between">
+                <span>Items ({{ totalQuantity }})</span>
+                <span>{{ totalCartPrice }} EGP</span>
+              </div>
+              <div class="flex justify-between text-gray-400">
+                <span>Shipping</span>
+                <span class="text-green-600 font-medium">Free</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between font-bold text-gray-800 text-lg border-t border-gray-100 pt-4 mb-6">
+              <span>Total</span>
+              <span class="text-green-700">{{ totalCartPrice }} EGP</span>
+            </div>
+
+            <!-- Clear Cart -->
+            <button
+              (click)="clearCart()"
+              class="w-full mb-3 border border-red-400 text-red-500 py-2 rounded-md hover:bg-red-50 transition text-sm">
+              Clear Cart
+            </button>
+
+            <!-- Checkout -->
+            <a routerLink="/checkout"
+              class="block text-center bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition font-medium">
+              Proceed to Checkout
+            </a>
+          </div>
+        </div>
+
+      </div>
+    }
+
+  </div>
+</section>

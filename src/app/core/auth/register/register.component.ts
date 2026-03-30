@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { InputComponent } from "../../../shared/components/input/input.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -10,12 +11,12 @@ import { InputComponent } from "../../../shared/components/input/input.component
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+  private subscription: Subscription = new Subscription();
 
-  flag: boolean = true;
   masError: string = '';
   isLoading: boolean = false;
 
@@ -33,52 +34,40 @@ export class RegisterComponent implements OnInit {
     validators: this.confirmPassword
   });
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   confirmPassword(group: AbstractControl) {
     if (group.get('password')?.value === group.get('rePassword')?.value) {
       return null;
     }
-    else {
-      group.get('rePassword')?.setErrors({ mismatch: true });
-      return { mismatch: true };
-    }
+    group.get('rePassword')?.setErrors({ mismatch: true });
+    return { mismatch: true };
   }
 
-
-
-
   submitForm(): void {
-    if (this.registerForm.valid) {
-    } else {
-      // show all errors
-      this.registerForm.setErrors({ mismatch: true });
-      this.registerForm.get('rePassword')?.patchValue(null);
+    if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
-    };
+      return;
+    }
 
-    console.log(this.registerForm.value);
     this.isLoading = true;
+    this.masError = '';
 
-    this.authService.registerForm(this.registerForm.value).subscribe({
+    this.subscription = this.authService.registerForm(this.registerForm.value).subscribe({
       next: (res) => {
-        console.log(res);
-        if (res.message === "success") {
-          setTimeout(() => {
-            this.masError = '';
-            this.router.navigate(['/login']);
-          }, 1000);
-        }
         this.isLoading = false;
-
+        if (res.message === 'success') {
+          this.router.navigate(['/login']);
+        }
       },
       error: (err) => {
-        console.log(err);
-        this.masError = err.error.message;
+        this.masError = err.error?.message ?? 'Something went wrong.';
         this.isLoading = false;
       }
-    })
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

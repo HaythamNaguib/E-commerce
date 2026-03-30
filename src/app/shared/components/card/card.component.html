@@ -12,7 +12,15 @@
   </div>
 
   <button
-    class="mt-3 disabled:bg-gray-500 disabled:cursor-not-allowed bg-green-700 text-white border border-green-900 py-2 w-full cursor-pointer hover:bg-green-800 transition-all duration-300 rounded">
-    Add To Cart
+    (click)="addToCart(product._id)"
+    [disabled]="isAdding"
+    class="mt-3 disabled:bg-gray-500 disabled:cursor-not-allowed bg-green-700 text-white border border-green-900 py-2 w-full cursor-pointer hover:bg-green-800 transition-all duration-300 rounded flex items-center justify-center gap-2">
+    @if (isAdding) {
+      <i class="fas fa-spinner animate-spin"></i>
+    } @else if (added) {
+      <i class="fas fa-check"></i> Added!
+    } @else {
+      Add To Cart
+    }
   </button>
 </div>

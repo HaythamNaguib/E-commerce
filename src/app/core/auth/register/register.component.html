@@ -1,57 +1,62 @@
-<section className="bg-gray-200 rounded-lg border border-gray-300 p-4 shadow-md md:w-1/2 mx-auto my-14">
-  <h1 className="text-center mb-3 font-light text-3xl">Register Now</h1>
+<section class="bg-gray-200 rounded-lg border border-gray-300 p-4 shadow-md md:w-1/2 mx-auto my-14">
+  <h1 class="text-center mb-3 font-light text-3xl">Register Now</h1>
 
-    <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
-      <app-input
+  <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+
+    <app-input
       [control]="registerForm.get('name')"
       [typeInput]="'text'"
       [idInput]="'name'"
       [labelInput]="'Full Name'">
-      </app-input>
-      <app-input
+    </app-input>
+
+    <app-input
       [control]="registerForm.get('email')"
       [typeInput]="'email'"
-       [idInput]="'email'"
-       [labelInput]="'Email Address'">
-      </app-input>
-      <app-input
+      [idInput]="'email'"
+      [labelInput]="'Email Address'">
+    </app-input>
+
+    <app-input
       [control]="registerForm.get('password')"
-       [idInput]="'password'"
-        [labelInput]="'Password'">
-        Success field should match the pattern
-      </app-input>
-      <app-input
+      [idInput]="'password'"
+      [labelInput]="'Password'">
+      Success field should match the pattern
+    </app-input>
+
+    <app-input
       [control]="registerForm.get('rePassword')"
-       [idInput]="'rePassword'"
-       [labelInput]="'Confirm Password'">
-      </app-input>
-      <app-input
+      [idInput]="'rePassword'"
+      [labelInput]="'Confirm Password'">
+    </app-input>
+
+    <app-input
       [control]="registerForm.get('phone')"
-      [typeInput]="'text'" [idInput]="'phone'"
-       [labelInput]="'Phone Number'">
-       Input field should match numbers only.
-      </app-input>
-      <button
-        class="disabled:bg-gray-500 disabled:cursor-not-allowed bg-green-600 text-white py-3 w-full cursor-pointer hover:bg-green-700 transition-all duration-300"
-        type="submit"
-        style="font-family: 'Arial, sans-serif', cursive; font-size: 1.125rem;">
-        Register
-       @if (isLoading) {
-               <span> <i class="fas fa-spinner animate-spin"></i> </span>
-       }
-      </button>
-      @if (masError) {
-        <p class="text-center text-red-900 mt-4 p-4 bg-red-200">{{masError}}</p>
+      [typeInput]="'text'"
+      [idInput]="'phone'"
+      [labelInput]="'Phone Number'">
+      Input field should match numbers only.
+    </app-input>
 
-}
-    </form>
+    <button
+      class="disabled:bg-gray-500 disabled:cursor-not-allowed bg-green-600 text-white py-3 w-full cursor-pointer hover:bg-green-700 transition-all duration-300 flex items-center justify-center gap-2"
+      type="submit">
+      Register
+      @if (isLoading) {
+        <i class="fas fa-spinner animate-spin"></i>
+      }
+    </button>
 
-  </section>
+    @if (masError) {
+      <p class="text-center text-red-900 mt-4 p-4 bg-red-200 rounded">{{ masError }}</p>
+    }
 
-  <section class="text-center mt-8 pb-8">
-    <h2 class="text-2xl mb-2" style="font-family: 'Arial, sans-serif', cursive;">Get The Lacare.egy App</h2>
-    <p class="text-gray-600 text-sm" style="font-family: 'Brush Script MT', cursive;">
-      We Will Send You a Link, Open it on Your Phone to download the app
-    </p>
-  </section>
+  </form>
+</section>
 
+<section class="text-center mt-8 pb-8">
+  <h2 class="text-2xl mb-2">Get The Lacare.egy App</h2>
+  <p class="text-gray-600 text-sm">
+    We Will Send You a Link, Open it on Your Phone to download the app
+  </p>
+</section>

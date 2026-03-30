@@ -10,8 +10,10 @@ export class CategoriesService {
   private readonly httpClient = inject(HttpClient);
 
   getAllCategories(): Observable<any> {
-    return this.httpClient.get(environment.baseUrl + 'categories')
-
+    return this.httpClient.get(environment.baseUrl + 'categories');
   }
 
+  getCategoryProducts(categoryId: string): Observable<any> {
+    return this.httpClient.get(environment.baseUrl + `products?category=${categoryId}`);
+  }
 }

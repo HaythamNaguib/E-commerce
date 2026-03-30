@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import path from 'path';
 import { AuthLayoutComponent } from './core/layout/auth-layout/auth-layout.component';
 import { BlankLayoutComponent } from './core/layout/blank-layout/blank-layout.component';
 import { LoginComponent } from './core/auth/login/login.component';
@@ -12,6 +11,7 @@ import { CategoriesComponent } from './features/categories/categories.component'
 import { DetailsComponent } from './features/details/details.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
 import { NotfoundComponent } from './features/notfound/notfound.component';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,7 +22,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: '', component: BlankLayoutComponent, children: [
+    path: '', component: BlankLayoutComponent, canActivate: [authGuard], children: [
       { path: 'home', component: HomeComponent, title: "Home page" },
       { path: 'cart', component: CartComponent, title: "cart page" },
       { path: 'products', component: ProductsComponent, title: "products page" },
@@ -30,11 +30,8 @@ export const routes: Routes = [
       { path: 'categories', component: CategoriesComponent, title: "categories page" },
       { path: 'details/:slug/:id', component: DetailsComponent, title: "details page" },
       { path: 'details/:id', component: DetailsComponent, title: "details page" },
-
       { path: 'checkout', component: CheckoutComponent, title: "checkout page" },
-      { path: '""', component: NotfoundComponent, title: "not found page" },
-
-
     ]
   },
+  { path: '**', component: NotfoundComponent, title: "not found page" },
 ];
