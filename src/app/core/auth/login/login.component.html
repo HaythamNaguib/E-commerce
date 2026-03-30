@@ -1,32 +1,64 @@
-<section class="bg-gray-200 rounded-lg border border-gray-300 p-4 shadow-md md:w-1/2 mx-auto my-14">
-  <h1 class="text-center mb-3 font-light text-3xl">Login</h1>
+<div class="min-h-screen `bg-gradient-to-br` from-green-50 to-gray-100 flex items-center justify-center px-4 py-12">
+  <div class="w-full max-w-md">
 
-  <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-8">
 
-    <app-input [control]="loginForm.get('email')" [typeInput]="'email'" [labelInput]="'Email'" [idInput]="'email'"></app-input>
-    <app-input [control]="loginForm.get('password')" [labelInput]="'Password'" [idInput]="'password'">
-      Success field should match the pattern
-    </app-input>
+      <!-- Logo & Title -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+          <i class="fas fa-leaf text-green-600 text-2xl"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800">Welcome Back</h1>
+        <p class="text-gray-400 text-sm mt-1">Login to your LaCare account</p>
+      </div>
 
-    <button
-      class="disabled:bg-gray-500 disabled:cursor-not-allowed bg-green-600 text-white py-3 w-full cursor-pointer hover:bg-green-700 transition-all duration-300 flex items-center justify-center gap-2"
-      type="submit">
-      Login
-      @if (isLoading) {
-        <i class="fas fa-spinner animate-spin"></i>
-      }
-    </button>
+      <!-- Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
 
-    @if (masError) {
-      <p class="text-center text-red-900 mt-4 p-4 bg-red-200 rounded">{{ masError }}</p>
-    }
+        <app-input
+          [control]="loginForm.get('email')"
+          [typeInput]="'email'"
+          [labelInput]="'Email Address'"
+          [idInput]="'email'">
+        </app-input>
 
-  </form>
-</section>
+        <app-input
+          [control]="loginForm.get('password')"
+          [labelInput]="'Password'"
+          [idInput]="'password'">
+          Password must be at least 6 characters.
+        </app-input>
 
-<section class="text-center mt-8 pb-8">
-  <h2 class="text-2xl mb-2">Get The Lacare.egy App</h2>
-  <p class="text-gray-600 text-sm">
-    We Will Send You a Link, Open it on Your Phone to download the app
-  </p>
-</section>
+        <!-- Error -->
+        @if (masError) {
+          <div class="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm mb-4">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ masError }}</span>
+          </div>
+        }
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          [disabled]="isLoading"
+          class="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2">
+          @if (isLoading) {
+            <i class="fas fa-spinner animate-spin"></i> Logging in...
+          } @else {
+            Login
+          }
+        </button>
+
+      </form>
+
+      <!-- Register Link -->
+      <p class="text-center text-sm text-gray-500 mt-6">
+        Don't have an account?
+        <a routerLink="/register" class="text-green-600 font-semibold hover:underline">Register Now</a>
+      </p>
+
+    </div>
+
+  </div>
+</div>

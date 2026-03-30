@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from "../../../shared/components/input/input.component";
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, InputComponent],
+  imports: [ReactiveFormsModule, InputComponent, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -21,11 +21,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
 
   registerForm = this.fb.group({
-    name: [null, [
-      Validators.required,
-      Validators.minLength(2),
-      Validators.maxLength(20),
-    ]],
+    name: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
     email: [null, [Validators.required, Validators.email]],
     password: [null, [Validators.required, Validators.pattern(/^[\w@$!%*?&]{6,}$/)]],
     rePassword: [null, [Validators.required]],
