@@ -1,11 +1,10 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ɵEmptyOutletComponent } from "@angular/router";
 
 
 @Component({
   selector: 'app-input',
-  imports: [ReactiveFormsModule,],
+  imports: [ReactiveFormsModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
 })

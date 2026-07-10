@@ -1,7 +1,8 @@
-<section class="min-h-screen bg-gray-100 py-10 px-4">
-  <div class="mx-auto max-w-4xl">
+<section class="min-h-screen bg-gray-50 py-10 px-4">
+  <div class="mx-auto max-w-5xl">
 
-    <h1 class="text-3xl font-semibold text-green-800 mb-8">Checkout</h1>
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Checkout</h1>
+    <span class="block w-16 h-1 bg-green-600 rounded mb-8"></span>
 
     <!-- Loading -->
     @if (isLoading) {
@@ -11,11 +12,11 @@
     }
 
     @if (!isLoading) {
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
 
         <!-- Shipping Form -->
-        <div class="bg-white rounded-xl shadow-sm p-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-5 pb-3 border-b border-gray-100">
+        <div class="lg:col-span-3 bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <h2 class="text-lg font-semibold text-gray-800 mb-5 pb-3 border-b border-gray-100">
             <i class="fas fa-map-marker-alt text-green-600 mr-2"></i>
             Shipping Details
           </h2>
@@ -30,11 +31,11 @@
                   formControlName="details"
                   type="text"
                   placeholder="123 Main St, Apt 4B"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                   [class.border-red-400]="checkoutForm.get('details')?.invalid && checkoutForm.get('details')?.touched"
                 />
                 @if (checkoutForm.get('details')?.invalid && checkoutForm.get('details')?.touched) {
-                  <p class="text-red-500 text-xs mt-1">Address is required.</p>
+                  <p class="text-red-500 text-xs mt-1.5">Address is required (min 5 characters).</p>
                 }
               </div>
 
@@ -45,11 +46,11 @@
                   formControlName="phone"
                   type="tel"
                   placeholder="01xxxxxxxxx"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                   [class.border-red-400]="checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched"
                 />
                 @if (checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched) {
-                  <p class="text-red-500 text-xs mt-1">Enter a valid Egyptian phone number.</p>
+                  <p class="text-red-500 text-xs mt-1.5">Enter a valid Egyptian phone number (01xxxxxxxxx).</p>
                 }
               </div>
 
@@ -60,28 +61,32 @@
                   formControlName="city"
                   type="text"
                   placeholder="Cairo"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                   [class.border-red-400]="checkoutForm.get('city')?.invalid && checkoutForm.get('city')?.touched"
                 />
                 @if (checkoutForm.get('city')?.invalid && checkoutForm.get('city')?.touched) {
-                  <p class="text-red-500 text-xs mt-1">City is required.</p>
+                  <p class="text-red-500 text-xs mt-1.5">City is required.</p>
                 }
               </div>
             </div>
 
             <!-- Payment Method -->
-            <h2 class="text-xl font-semibold text-gray-800 mb-4 pb-3 border-b border-gray-100">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4 pb-3 border-b border-gray-100">
               <i class="fas fa-credit-card text-green-600 mr-2"></i>
               Payment Method
             </h2>
 
             <div class="flex gap-4 mb-6">
               <label
-                class="flex-1 border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 flex items-center gap-3"
+                class="flex-1 border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 flex items-center gap-3"
                 [class.border-green-600]="paymentMethod === 'cash'"
+                [class.bg-green-50]="paymentMethod === 'cash'"
                 [class.border-gray-200]="paymentMethod !== 'cash'"
+                [class.hover:border-gray-300]="paymentMethod !== 'cash'"
                 (click)="paymentMethod = 'cash'">
-                <i class="fas fa-money-bill-wave text-green-600 text-xl"></i>
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-money-bill-wave text-green-600"></i>
+                </div>
                 <div>
                   <p class="font-medium text-gray-800 text-sm">Cash on Delivery</p>
                   <p class="text-xs text-gray-400">Pay when you receive</p>
@@ -89,11 +94,15 @@
               </label>
 
               <label
-                class="flex-1 border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 flex items-center gap-3"
+                class="flex-1 border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 flex items-center gap-3"
                 [class.border-green-600]="paymentMethod === 'online'"
+                [class.bg-green-50]="paymentMethod === 'online'"
                 [class.border-gray-200]="paymentMethod !== 'online'"
+                [class.hover:border-gray-300]="paymentMethod !== 'online'"
                 (click)="paymentMethod = 'online'">
-                <i class="fas fa-credit-card text-green-600 text-xl"></i>
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-credit-card text-green-600"></i>
+                </div>
                 <div>
                   <p class="font-medium text-gray-800 text-sm">Online Payment</p>
                   <p class="text-xs text-gray-400">Pay with card</p>
@@ -103,19 +112,25 @@
 
             <!-- Error -->
             @if (errorMsg) {
-              <p class="text-center text-red-900 mb-4 p-3 bg-red-100 rounded-lg text-sm">{{ errorMsg }}</p>
+              <div class="text-center text-red-700 mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm flex items-center justify-center gap-2">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ errorMsg }}
+              </div>
             }
 
             <!-- Success -->
             @if (successMsg) {
-              <p class="text-center text-green-900 mb-4 p-3 bg-green-100 rounded-lg text-sm">{{ successMsg }}</p>
+              <div class="text-center text-green-700 mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-sm flex items-center justify-center gap-2">
+                <i class="fas fa-check-circle"></i>
+                {{ successMsg }}
+              </div>
             }
 
             <!-- Submit -->
             <button
               type="submit"
               [disabled]="checkoutForm.invalid || isSubmitting"
-              class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition font-medium disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+              class="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition-all duration-200 font-medium disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-sm hover:shadow">
               @if (isSubmitting) {
                 <i class="fas fa-spinner animate-spin"></i>
               }
@@ -126,8 +141,8 @@
         </div>
 
         <!-- Order Summary -->
-        <div class="bg-white rounded-xl shadow-sm p-6 h-fit sticky top-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4 pb-3 border-b border-gray-100">
+        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 h-fit sticky top-24 border border-gray-100">
+          <h2 class="text-lg font-semibold text-gray-800 mb-4 pb-3 border-b border-gray-100">
             Order Summary
           </h2>
 
@@ -141,7 +156,7 @@
                 <img
                   [src]="item.product.imageCover"
                   [alt]="item.product.title"
-                  class="w-12 h-12 object-contain rounded border border-gray-100 "
+                  class="w-12 h-12 object-contain rounded-lg border border-gray-100 bg-gray-50 p-1"
                 />
                 <div class="flex-1 min-w-0">
                   <p class="text-xs font-medium text-gray-700 line-clamp-1">{{ item.product.title }}</p>
@@ -155,13 +170,13 @@
           <div class="border-t border-gray-100 pt-4 space-y-2 text-sm text-gray-600">
             <div class="flex justify-between">
               <span>Subtotal</span>
-              <span>{{ totalCartPrice }} EGP</span>
+              <span class="font-medium">{{ totalCartPrice }} EGP</span>
             </div>
             <div class="flex justify-between text-gray-400">
               <span>Shipping</span>
               <span class="text-green-600 font-medium">Free</span>
             </div>
-            <div class="flex justify-between font-bold text-gray-800 text-base pt-2 border-t border-gray-100">
+            <div class="flex justify-between font-bold text-gray-800 text-base pt-3 border-t border-gray-100">
               <span>Total</span>
               <span class="text-green-700">{{ totalCartPrice }} EGP</span>
             </div>

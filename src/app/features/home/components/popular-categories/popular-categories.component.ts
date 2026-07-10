@@ -1,15 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { CategoriesService } from './../../../../core/services/categories/categories.service';
 import { Category } from '../../../../core/models/category.interface';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { log } from 'console';
 
 @Component({
   selector: 'app-popular-categories',
   standalone: true,
-  imports: [CarouselModule],
+  imports: [CarouselModule, RouterLink],
   templateUrl: './popular-categories.component.html',
   styleUrl: './popular-categories.component.css'
 })

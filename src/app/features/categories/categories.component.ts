@@ -2,16 +2,18 @@ import { Product } from '../../core/models/product.interface';
 import { Category } from './../../core/models/category.interface';
 import { CategoriesService } from './../../core/services/categories/categories.service';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { CardComponent } from '../../shared/components/card/card.component';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-categories',
-  imports: [RouterLink],
+  imports: [CardComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent implements OnInit {
   private readonly categoriesService = inject(CategoriesService);
+  private readonly seoService = inject(SeoService);
 
   categoriesList: Category[] = [];
   selectedCategory: Category | null = null;
@@ -20,6 +22,13 @@ export class CategoriesComponent implements OnInit {
   productsLoading: boolean = false;
 
   ngOnInit(): void {
+    this.seoService.updateMetaTags({
+      title: 'Shop By Category',
+      description: 'Browse all categories at LaCare. Find electronics, fashion, home products and more in organized categories.',
+      keywords: 'categories, shop by category, LaCare categories, product categories',
+      url: 'https://lacare.netlify.app/categories'
+    });
+
     this.loadCategories();
   }
 

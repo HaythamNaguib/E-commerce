@@ -1,0 +1,10 @@
+# robots.txt for LaCare E-commerce
+User-agent: *
+Allow: /
+
+# Disallow admin/private paths
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://lacare.netlify.app/sitemap.xml

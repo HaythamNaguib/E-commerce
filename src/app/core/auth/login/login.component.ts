@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from "../../../shared/components/input/input.component";
 import { Subscription } from 'rxjs';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+  private readonly seoService = inject(SeoService);
   private subscription: Subscription = new Subscription();
 
   isLoading: boolean = false;
@@ -25,7 +27,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     password: [null, [Validators.required, Validators.pattern(/^[\w@$!%*?&]{6,}$/)]],
   });
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.seoService.updateMetaTags({
+      title: 'Login',
+      description: 'Login to your LaCare account. Access your orders, wishlist, and enjoy a personalized shopping experience.',
+      keywords: 'login, sign in, LaCare account, my account',
+      url: 'https://lacare.netlify.app/login'
+    });
+  }
 
   submitForm(): void {
     if (this.loginForm.invalid) {

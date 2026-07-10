@@ -3,6 +3,7 @@ import { CardComponent } from "../../shared/components/card/card.component";
 import { Product } from '../../core/models/product.interface';
 import { ProductsService } from '../../core/services/products/products.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SeoService } from '../../core/services/seo.service';
 
 
 @Component({
@@ -12,13 +13,21 @@ import { NgxPaginationModule } from 'ngx-pagination';
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
-  private readonly productsService = inject(ProductsService)
+  private readonly productsService = inject(ProductsService);
+  private readonly seoService = inject(SeoService);
   productslist: Product[] = [];
   pageSize!: number;
   p!: number;
   total!: number;
 
   ngOnInit(): void {
+    this.seoService.updateMetaTags({
+      title: 'All Products',
+      description: 'Browse our complete collection of quality products at LaCare. Find the best deals on electronics, fashion, home products and more.',
+      keywords: 'all products, shop online, LaCare products, buy online Egypt, ecommerce',
+      url: 'https://lacare.netlify.app/products'
+    });
+
     this.getAllProductsData();
   }
   getAllProductsData(PageNumbuer: number = 1): void {

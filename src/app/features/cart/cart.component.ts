@@ -1,6 +1,7 @@
 import { CartService } from './../../core/services/cart.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SeoService } from '../../core/services/seo.service';
 
 interface CartItem {
   count: number;
@@ -21,6 +22,7 @@ interface CartItem {
 })
 export class CartComponent implements OnInit {
   private readonly cartService = inject(CartService);
+  private readonly seoService = inject(SeoService);
 
   cartItems: CartItem[] = [];
   totalCartPrice: number = 0;
@@ -31,6 +33,13 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.seoService.updateMetaTags({
+      title: 'My Cart',
+      description: 'Review your shopping cart at LaCare. Check your selected items and proceed to checkout for fast delivery.',
+      keywords: 'shopping cart, checkout, LaCare cart, buy online',
+      url: 'https://lacare.netlify.app/cart'
+    });
+
     this.loadCart();
   }
 

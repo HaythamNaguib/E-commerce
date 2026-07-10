@@ -1,3 +1,30 @@
- .my-pagination ::ng-deep .ngx-pagination .current {
-   background: green;
- }
+.my-pagination ::ng-deep .ngx-pagination {
+  display: flex;
+  gap: 4px;
+}
+
+.my-pagination ::ng-deep .ngx-pagination .current {
+  background: #16a34a;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-pagination ::ng-deep .ngx-pagination a {
+  border-radius: 8px;
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-pagination ::ng-deep .ngx-pagination a:hover {
+  background: #f0fdf4;
+  color: #16a34a;
+}

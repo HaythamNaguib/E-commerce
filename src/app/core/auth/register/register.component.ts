@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from "../../../shared/components/input/input.component";
 import { Subscription } from 'rxjs';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+  private readonly seoService = inject(SeoService);
   private subscription: Subscription = new Subscription();
 
   masError: string = '';
@@ -30,7 +32,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     validators: this.confirmPassword
   });
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.seoService.updateMetaTags({
+      title: 'Register',
+      description: 'Create your LaCare account. Join thousands of happy customers and enjoy exclusive deals and fast delivery.',
+      keywords: 'register, sign up, create account, LaCare, join',
+      url: 'https://lacare.netlify.app/register'
+    });
+  }
 
   confirmPassword(group: AbstractControl) {
     if (group.get('password')?.value === group.get('rePassword')?.value) {

@@ -1,26 +1,37 @@
-<div class="card overflow-hidden bg-white border rounded shadow-md p-2 group/card flex flex-col h-full">
+<div class="card overflow-hidden bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-lg p-3 group/card flex flex-col h-full transition-all duration-300">
   <div class="cursor-pointer flex-1 flex flex-col" [routerLink]="['/details' , product.slug , product.id]">
-    <div class="flex items-center justify-center h-[200px] bg-gray-50">
-      <img [src]="product.imageCover" class="max-h-full max-w-full object-contain" [alt]="product.title" />
+    <!-- Image -->
+    <div class="flex items-center justify-center h-[200px] bg-gray-50 rounded-lg overflow-hidden mb-3 group-hover/card:bg-gray-100 transition-colors duration-300">
+      <img [src]="product.imageCover" class="max-h-full max-w-full object-contain p-2 group-hover/card:scale-105 transition-transform duration-500" [alt]="product.title" />
     </div>
-    <h3 class="text-green-700 mt-2 text-sm">{{ product.category.name }}</h3>
-    <h4 class="line-clamp-2 text-base font-medium flex-1">{{ product.title }}</h4>
-    <div class="flex items-center justify-between mt-2">
-      <span class="font-semibold">{{ product.price }} EGP</span>
-      <span class="flex items-center gap-1"><i class="fas fa-star text-yellow-500"></i> {{ product.ratingsAverage }}</span>
+
+    <!-- Category -->
+    <h3 class="text-green-600 text-xs font-medium mb-1 uppercase tracking-wide">{{ product.category.name }}</h3>
+
+    <!-- Title -->
+    <h4 class="line-clamp-2 text-sm font-semibold text-gray-800 mb-2 flex-1 leading-snug">{{ product.title }}</h4>
+
+    <!-- Price & Rating -->
+    <div class="flex items-center justify-between mt-auto">
+      <span class="font-bold text-gray-900 text-sm">{{ product.price }} EGP</span>
+      <span class="flex items-center gap-1 text-xs">
+        <i class="fas fa-star text-yellow-400"></i>
+        <span class="text-gray-600 font-medium">{{ product.ratingsAverage }}</span>
+      </span>
     </div>
   </div>
 
+  <!-- Add to Cart Button -->
   <button
     (click)="addToCart(product._id)"
     [disabled]="isAdding"
-    class="mt-3 disabled:bg-gray-500 disabled:cursor-not-allowed bg-green-700 text-white border border-green-900 py-2 w-full cursor-pointer hover:bg-green-800 transition-all duration-300 rounded flex items-center justify-center gap-2">
+    class="mt-3 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed bg-green-600 text-white py-2.5 w-full cursor-pointer hover:bg-green-700 transition-all duration-200 rounded-lg flex items-center justify-center gap-2 text-sm font-medium shadow-sm hover:shadow">
     @if (isAdding) {
       <i class="fas fa-spinner animate-spin"></i>
     } @else if (added) {
       <i class="fas fa-check"></i> Added!
     } @else {
-      Add To Cart
+      <i class="fas fa-shopping-cart text-xs"></i> Add To Cart
     }
   </button>
 </div>

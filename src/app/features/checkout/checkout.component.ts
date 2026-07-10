@@ -2,6 +2,7 @@ import { CartService } from './../../core/services/cart.service';
 import { CheckoutService } from './../../core/services/checkout.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SeoService } from '../../core/services/seo.service';
 
 interface CartItem {
   count: number;
@@ -23,6 +24,7 @@ export class CheckoutComponent implements OnInit {
   private readonly checkoutService = inject(CheckoutService);
   private readonly cartService = inject(CartService);
   private readonly fb = inject(FormBuilder);
+  private readonly seoService = inject(SeoService);
 
   cartItems: CartItem[] = [];
   totalCartPrice: number = 0;
@@ -41,6 +43,13 @@ export class CheckoutComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.seoService.updateMetaTags({
+      title: 'Checkout',
+      description: 'Complete your order at LaCare. Choose your shipping address and payment method for fast delivery.',
+      keywords: 'checkout, order, payment, LaCare, buy online',
+      url: 'https://lacare.netlify.app/checkout'
+    });
+
     this.loadCart();
   }
 
