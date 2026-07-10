@@ -1,7 +1,6 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
-import { environment } from '../../../environments/environment.development';
 
 export interface SeoData {
   title: string;
@@ -28,63 +27,44 @@ export class SeoService {
       ? data.title
       : `${data.title} | ${this.siteName}`;
 
-    this.title.setTitle(fullTitle);
+    try {
+      this.title.setTitle(fullTitle);
+      this.meta.updateTag({ name: 'description', content: data.description });
+      this.meta.updateTag({ name: 'keywords', content: data.keywords ?? 'ecommerce, shop, online store, LaCare' });
+      this.meta.updateTag({ name: 'robots', content: 'index, follow' });
 
-    this.meta.updateTag({ name: 'description', content: data.description });
-    this.meta.updateTag({ name: 'keywords', content: data.keywords ?? 'ecommerce, shop, online store, LaCare' });
-    this.meta.updateTag({ name: 'robots', content: 'index, follow' });
+      this.meta.updateTag({ property: 'og:title', content: fullTitle });
+      this.meta.updateTag({ property: 'og:description', content: data.description });
+      this.meta.updateTag({ property: 'og:image', content: data.image ?? this.defaultImage });
+      this.meta.updateTag({ property: 'og:type', content: data.type ?? 'website' });
+      this.meta.updateTag({ property: 'og:site_name', content: this.siteName });
 
-    // Open Graph
-    this.meta.updateTag({ property: 'og:title', content: fullTitle });
-    this.meta.updateTag({ property: 'og:description', content: data.description });
-    this.meta.updateTag({ property: 'og:image', content: data.image ?? this.defaultImage });
-    this.meta.updateTag({ property: 'og:type', content: data.type ?? 'website' });
-    this.meta.updateTag({ property: 'og:site_name', content: this.siteName });
-
-    // Twitter Card
-    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:title', content: fullTitle });
-    this.meta.updateTag({ name: 'twitter:description', content: data.description });
-    this.meta.updateTag({ name: 'twitter:image', content: data.image ?? this.defaultImage });
-
-    // Canonical
-    if (isPlatformBrowser(this.platformId)) {
-      const url = data.url ?? window.location.href;
-      this.updateCanonical(url);
-    }
-  }
-
-  private updateCanonical(url: string): void {
-    const existingCanonical = document.querySelector('link[rel="canonical"]');
-    if (existingCanonical) {
-      existingCanonical.setAttribute('href', url);
-    } else {
-      const link = document.createElement('link');
-      link.setAttribute('rel', 'canonical');
-      link.setAttribute('href', url);
-      document.head.appendChild(link);
+      this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+      this.meta.updateTag({ name: 'twitter:title', content: fullTitle });
+      this.meta.updateTag({ name: 'twitter:description', content: data.description });
+      this.meta.updateTag({ name: 'twitter:image', content: data.image ?? this.defaultImage });
+    } catch {
+      // Silently fail during SSR
     }
   }
 
   addJsonLd(id: string, schema: object): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    const existingScript = document.getElementById(id);
-    if (existingScript) {
-      existingScript.remove();
+    try {
+      const existingScript = document.getElementById(id);
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      const script = document.createElement('script');
+      script.id = id;
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(schema);
+      document.head.appendChild(script);
+    } catch {
+      // Silently fail
     }
-
-    const script = document.createElement('script');
-    script.id = id;
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(schema);
-    document.head.appendChild(script);
-  }
-
-  removeJsonLd(id: string): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const script = document.getElementById(id);
-    if (script) script.remove();
   }
 
   getProductSchema(product: any): object {
@@ -104,8 +84,7 @@ export class SeoService {
         price: product.price,
         availability: (product.quantity ?? 0) > 0
           ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        url: isPlatformBrowser(this.platformId) ? window.location.href : ''
+          : 'https://schema.org/OutOfStock'
       },
       aggregateRating: product.ratingsAverage ? {
         '@type': 'AggregateRating',
@@ -120,8 +99,7 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: this.siteName,
-      url: environment.baseUrl,
-      logo: '/images/ms-1.avif',
+      logo: this.defaultImage,
       sameAs: [
         'https://www.facebook.com/share/1CdLkTNkiN/',
         'https://www.linkedin.com/in/haytham-mohamed-nagiub-614620193'
@@ -134,10 +112,9 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: this.siteName,
-      url: environment.baseUrl,
       potentialAction: {
         '@type': 'SearchAction',
-        target: environment.baseUrl + 'products?search={search_term_string}',
+        target: '/products',
         'query-input': 'required name=search_term_string'
       }
     };

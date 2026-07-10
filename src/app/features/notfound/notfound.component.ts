@@ -14,8 +14,7 @@ export class NotfoundComponent implements OnInit {
   ngOnInit(): void {
     this.seoService.updateMetaTags({
       title: 'Page Not Found',
-      description: 'The page you are looking for does not exist. Go back to LaCare homepage to continue shopping.',
-      url: 'https://lacare.netlify.app/404'
+      description: 'The page you are looking for does not exist. Go back to LaCare homepage to continue shopping.'
     });
   }
 }

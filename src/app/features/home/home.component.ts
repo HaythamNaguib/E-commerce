@@ -17,8 +17,7 @@ export class HomeComponent implements OnInit {
     this.seoService.updateMetaTags({
       title: 'Home',
       description: 'LaCare - Your trusted destination for quality products at great prices. Shop electronics, fashion, home & more with fast delivery across Egypt.',
-      keywords: 'online shopping, ecommerce, best deals, LaCare, Egypt, shop online, buy online',
-      url: 'https://lacare.netlify.app/home'
+      keywords: 'online shopping, ecommerce, best deals, LaCare, Egypt, shop online, buy online'
     });
 
     this.seoService.addJsonLd('organization-schema', this.seoService.getOrganizationSchema());

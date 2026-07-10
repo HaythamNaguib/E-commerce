@@ -36,8 +36,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.seoService.updateMetaTags({
       title: 'Register',
       description: 'Create your LaCare account. Join thousands of happy customers and enjoy exclusive deals and fast delivery.',
-      keywords: 'register, sign up, create account, LaCare, join',
-      url: 'https://lacare.netlify.app/register'
+      keywords: 'register, sign up, create account, LaCare, join'
     });
   }
 

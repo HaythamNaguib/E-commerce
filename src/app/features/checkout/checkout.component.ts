@@ -46,8 +46,7 @@ export class CheckoutComponent implements OnInit {
     this.seoService.updateMetaTags({
       title: 'Checkout',
       description: 'Complete your order at LaCare. Choose your shipping address and payment method for fast delivery.',
-      keywords: 'checkout, order, payment, LaCare, buy online',
-      url: 'https://lacare.netlify.app/checkout'
+      keywords: 'checkout, order, payment, LaCare, buy online'
     });
 
     this.loadCart();

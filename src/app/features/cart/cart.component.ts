@@ -36,8 +36,7 @@ export class CartComponent implements OnInit {
     this.seoService.updateMetaTags({
       title: 'My Cart',
       description: 'Review your shopping cart at LaCare. Check your selected items and proceed to checkout for fast delivery.',
-      keywords: 'shopping cart, checkout, LaCare cart, buy online',
-      url: 'https://lacare.netlify.app/cart'
+      keywords: 'shopping cart, checkout, LaCare cart, buy online'
     });
 
     this.loadCart();

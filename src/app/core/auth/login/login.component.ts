@@ -31,8 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.seoService.updateMetaTags({
       title: 'Login',
       description: 'Login to your LaCare account. Access your orders, wishlist, and enjoy a personalized shopping experience.',
-      keywords: 'login, sign in, LaCare account, my account',
-      url: 'https://lacare.netlify.app/login'
+      keywords: 'login, sign in, LaCare account, my account'
     });
   }
 

@@ -50,16 +50,15 @@ export class DetailsComponent implements OnInit {
           description: res.data.description?.substring(0, 160) ?? `${res.data.title} - Buy now at LaCare`,
           keywords: `${res.data.title}, ${res.data.category?.name}, LaCare, buy online`,
           image: res.data.imageCover,
-          type: 'product',
-          url: `https://lacare.netlify.app/details/${res.data.slug}/${res.data._id}`
+          type: 'product'
         });
 
         this.seoService.addJsonLd('product-schema', this.seoService.getProductSchema(res.data));
 
         this.seoService.addJsonLd('breadcrumb-schema', this.seoService.getBreadcrumbSchema([
-          { name: 'Home', url: 'https://lacare.netlify.app/home' },
-          { name: 'Products', url: 'https://lacare.netlify.app/products' },
-          { name: res.data.title, url: `https://lacare.netlify.app/details/${res.data.slug}/${res.data._id}` }
+          { name: 'Home', url: '/home' },
+          { name: 'Products', url: '/products' },
+          { name: res.data.title, url: `/details/${res.data.slug}/${res.data._id}` }
         ]));
       },
       error: (err) => {
