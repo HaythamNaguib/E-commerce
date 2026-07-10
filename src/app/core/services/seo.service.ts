@@ -66,26 +66,25 @@ export class SeoService {
     }
   }
 
-  addJsonLd(schema: object): void {
-    const existingScript = document.getElementById('json-ld-schema');
+  addJsonLd(id: string, schema: object): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const existingScript = document.getElementById(id);
     if (existingScript) {
       existingScript.remove();
     }
 
-    if (isPlatformBrowser(this.platformId)) {
-      const script = document.createElement('script');
-      script.id = 'json-ld-schema';
-      script.type = 'application/ld+json';
-      script.textContent = JSON.stringify(schema);
-      document.head.appendChild(script);
-    }
+    const script = document.createElement('script');
+    script.id = id;
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
   }
 
-  removeJsonLd(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const script = document.getElementById('json-ld-schema');
-      if (script) script.remove();
-    }
+  removeJsonLd(id: string): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const script = document.getElementById(id);
+    if (script) script.remove();
   }
 
   getProductSchema(product: any): object {

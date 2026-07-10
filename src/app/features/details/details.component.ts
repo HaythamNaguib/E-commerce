@@ -54,9 +54,9 @@ export class DetailsComponent implements OnInit {
           url: `https://lacare.netlify.app/details/${res.data.slug}/${res.data._id}`
         });
 
-        this.seoService.addJsonLd(this.seoService.getProductSchema(res.data));
+        this.seoService.addJsonLd('product-schema', this.seoService.getProductSchema(res.data));
 
-        this.seoService.addJsonLd(this.seoService.getBreadcrumbSchema([
+        this.seoService.addJsonLd('breadcrumb-schema', this.seoService.getBreadcrumbSchema([
           { name: 'Home', url: 'https://lacare.netlify.app/home' },
           { name: 'Products', url: 'https://lacare.netlify.app/products' },
           { name: res.data.title, url: `https://lacare.netlify.app/details/${res.data.slug}/${res.data._id}` }

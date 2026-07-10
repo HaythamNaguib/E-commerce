@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
       url: 'https://lacare.netlify.app/home'
     });
 
-    this.seoService.addJsonLd(this.seoService.getOrganizationSchema());
-    this.seoService.addJsonLd(this.seoService.getWebsiteSchema());
+    this.seoService.addJsonLd('organization-schema', this.seoService.getOrganizationSchema());
+    this.seoService.addJsonLd('website-schema', this.seoService.getWebsiteSchema());
   }
 }
