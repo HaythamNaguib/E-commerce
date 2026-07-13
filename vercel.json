@@ -1,10 +1,10 @@
 {
   "installCommand": "npm install --legacy-peer-deps",
-  "buildCommand": "ng build --configuration production",
+  "buildCommand": "ng build --configuration production && cp dist/E-commerce/browser/index.csr.html dist/E-commerce/browser/index.html",
   "outputDirectory": "dist/E-commerce/browser",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!server/).*)",
       "destination": "/index.html"
     }
   ]
