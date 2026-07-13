@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lacare.netlify.app/home</loc>
-    <lastmod>2026-07-10</lastmod>
+    <loc>https://e-commerce-sigma-orcin-93.vercel.app/home</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://lacare.netlify.app/products</loc>
-    <lastmod>2026-07-10</lastmod>
+    <loc>https://e-commerce-sigma-orcin-93.vercel.app/products</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lacare.netlify.app/categories</loc>
-    <lastmod>2026-07-10</lastmod>
+    <loc>https://e-commerce-sigma-orcin-93.vercel.app/categories</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lacare.netlify.app/brands</loc>
-    <lastmod>2026-07-10</lastmod>
+    <loc>https://e-commerce-sigma-orcin-93.vercel.app/brands</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lacare.netlify.app/login</loc>
-    <lastmod>2026-07-10</lastmod>
+    <loc>https://e-commerce-sigma-orcin-93.vercel.app/login</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lacare.netlify.app/register</loc>
-    <lastmod>2026-07-10</lastmod>
+    <loc>https://e-commerce-sigma-orcin-93.vercel.app/register</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

@@ -11,7 +11,7 @@ export class FlowbiteService {
     if (isPlatformBrowser(this.platformId)) {
       import('flowbite').then(flowbite => {
         callback(flowbite);
-      });
+      }).catch(() => {});
     }
   }
 }

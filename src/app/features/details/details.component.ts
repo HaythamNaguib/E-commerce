@@ -50,7 +50,8 @@ export class DetailsComponent implements OnInit {
           description: res.data.description?.substring(0, 160) ?? `${res.data.title} - Buy now at LaCare`,
           keywords: `${res.data.title}, ${res.data.category?.name}, LaCare, buy online`,
           image: res.data.imageCover,
-          type: 'product'
+          type: 'product',
+          url: `/details/${res.data.slug}/${res.data._id}`
         });
 
         this.seoService.addJsonLd('product-schema', this.seoService.getProductSchema(res.data));

@@ -25,7 +25,8 @@ export class CategoriesComponent implements OnInit {
     this.seoService.updateMetaTags({
       title: 'Shop By Category',
       description: 'Browse all categories at LaCare. Find electronics, fashion, home products and more in organized categories.',
-      keywords: 'categories, shop by category, LaCare categories, product categories'
+      keywords: 'categories, shop by category, LaCare categories, product categories',
+      url: '/categories'
     });
 
     this.loadCategories();

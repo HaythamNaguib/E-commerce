@@ -1,6 +1,7 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 export interface SeoData {
   title: string;
@@ -20,12 +21,23 @@ export class SeoService {
   private readonly platformId = inject(PLATFORM_ID);
 
   private readonly siteName = 'LaCare';
+  private readonly siteUrl = environment.siteUrl;
   private readonly defaultImage = '/images/ms-1.avif';
+
+  private toAbsoluteUrl(path: string): string {
+    if (path.startsWith('http://') || path.startsWith('https://')) return path;
+    return `${this.siteUrl}${path.startsWith('/') ? '' : '/'}${path}`;
+  }
 
   updateMetaTags(data: SeoData): void {
     const fullTitle = data.title === this.siteName
       ? data.title
       : `${data.title} | ${this.siteName}`;
+
+    const imageUrl = this.toAbsoluteUrl(data.image ?? this.defaultImage);
+    const pageUrl = data.url
+      ? this.toAbsoluteUrl(data.url)
+      : this.siteUrl;
 
     try {
       this.title.setTitle(fullTitle);
@@ -35,14 +47,26 @@ export class SeoService {
 
       this.meta.updateTag({ property: 'og:title', content: fullTitle });
       this.meta.updateTag({ property: 'og:description', content: data.description });
-      this.meta.updateTag({ property: 'og:image', content: data.image ?? this.defaultImage });
+      this.meta.updateTag({ property: 'og:image', content: imageUrl });
+      this.meta.updateTag({ property: 'og:url', content: pageUrl });
       this.meta.updateTag({ property: 'og:type', content: data.type ?? 'website' });
       this.meta.updateTag({ property: 'og:site_name', content: this.siteName });
+      this.meta.updateTag({ property: 'og:locale', content: 'en_US' });
 
       this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
       this.meta.updateTag({ name: 'twitter:title', content: fullTitle });
       this.meta.updateTag({ name: 'twitter:description', content: data.description });
-      this.meta.updateTag({ name: 'twitter:image', content: data.image ?? this.defaultImage });
+      this.meta.updateTag({ name: 'twitter:image', content: imageUrl });
+
+      if (isPlatformBrowser(this.platformId)) {
+        let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+        if (!canonical) {
+          canonical = document.createElement('link');
+          canonical.setAttribute('rel', 'canonical');
+          document.head.appendChild(canonical);
+        }
+        canonical.setAttribute('href', pageUrl);
+      }
     } catch {
       // Silently fail during SSR
     }
@@ -73,7 +97,7 @@ export class SeoService {
       '@type': 'Product',
       name: product.title,
       description: product.description,
-      image: product.imageCover,
+      image: this.toAbsoluteUrl(product.imageCover),
       brand: {
         '@type': 'Brand',
         name: product.brand?.name ?? 'LaCare'
@@ -99,7 +123,8 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: this.siteName,
-      logo: this.defaultImage,
+      url: this.siteUrl,
+      logo: this.toAbsoluteUrl(this.defaultImage),
       sameAs: [
         'https://www.facebook.com/share/1CdLkTNkiN/',
         'https://www.linkedin.com/in/haytham-mohamed-nagiub-614620193'
@@ -112,9 +137,10 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: this.siteName,
+      url: this.siteUrl,
       potentialAction: {
         '@type': 'SearchAction',
-        target: '/products',
+        target: `${this.siteUrl}/products`,
         'query-input': 'required name=search_term_string'
       }
     };
@@ -128,7 +154,7 @@ export class SeoService {
         '@type': 'ListItem',
         position: index + 1,
         name: item.name,
-        item: item.url
+        item: this.toAbsoluteUrl(item.url)
       }))
     };
   }

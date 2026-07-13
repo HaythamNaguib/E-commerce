@@ -24,7 +24,8 @@ export class ProductsComponent implements OnInit {
     this.seoService.updateMetaTags({
       title: 'All Products',
       description: 'Browse our complete collection of quality products at LaCare. Find the best deals on electronics, fashion, home products and more.',
-      keywords: 'all products, shop online, LaCare products, buy online Egypt, ecommerce'
+      keywords: 'all products, shop online, LaCare products, buy online Egypt, ecommerce',
+      url: '/products'
     });
 
     this.getAllProductsData();

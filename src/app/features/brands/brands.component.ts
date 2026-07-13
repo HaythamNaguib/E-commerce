@@ -25,7 +25,8 @@ export class BrandsComponent implements OnInit {
     this.seoService.updateMetaTags({
       title: 'All Brands',
       description: 'Explore top brands at LaCare. Find your favorite brands and shop quality products with great prices.',
-      keywords: 'brands, top brands, LaCare brands, shop by brand'
+      keywords: 'brands, top brands, LaCare brands, shop by brand',
+      url: '/brands'
     });
 
     this.loadBrands();
