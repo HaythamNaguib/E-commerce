@@ -54,8 +54,6 @@ export class PopularCategoriesComponent implements OnInit {
 
 
 
-  CategoriesList: Category[] = [];
-
   ngOnInit(): void {
     this.getAllCategoriesData();
   }

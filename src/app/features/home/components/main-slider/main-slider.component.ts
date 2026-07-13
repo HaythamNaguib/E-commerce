@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
-import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-main-slider',
