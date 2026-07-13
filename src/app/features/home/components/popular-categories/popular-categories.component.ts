@@ -63,12 +63,9 @@ export class PopularCategoriesComponent implements OnInit {
   getAllCategoriesData(): void {
     this.categoriesService.getAllCategories().subscribe({
       next: (res) => {
-        console.log(res.data); //{() , {} ,{}}
         this.categoriesList = res.data;
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: () => {},
     });
   }
 }

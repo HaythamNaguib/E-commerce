@@ -39,8 +39,7 @@ export class BrandsComponent implements OnInit {
         this.brandsList = res.data ?? [];
         this.isLoading = false;
       },
-      error: (err: Error) => {
-        console.error(err);
+      error: () => {
         this.isLoading = false;
       }
     });
@@ -63,8 +62,7 @@ export class BrandsComponent implements OnInit {
         this.brandProducts = res.data ?? [];
         this.productsLoading = false;
       },
-      error: (err: Error) => {
-        console.error(err);
+      error: () => {
         this.productsLoading = false;
       }
     });

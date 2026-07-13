@@ -51,8 +51,7 @@ export class CartComponent implements OnInit {
         this.totalCartPrice = res.data?.totalCartPrice ?? 0;
         this.isLoading = false;
       },
-      error: (err: Error) => {
-        console.error(err);
+      error: () => {
         this.isLoading = false;
       }
     });
@@ -65,7 +64,7 @@ export class CartComponent implements OnInit {
         this.cartItems = res.data?.products ?? [];
         this.totalCartPrice = res.data?.totalCartPrice ?? 0;
       },
-      error: (err: Error) => console.error(err)
+      error: () => {}
     });
   }
 
@@ -75,7 +74,7 @@ export class CartComponent implements OnInit {
         this.cartItems = res.data?.products ?? [];
         this.totalCartPrice = res.data?.totalCartPrice ?? 0;
       },
-      error: (err: Error) => console.error(err)
+      error: () => {}
     });
   }
 
@@ -85,7 +84,7 @@ export class CartComponent implements OnInit {
         this.cartItems = [];
         this.totalCartPrice = 0;
       },
-      error: (err: Error) => console.error(err)
+      error: () => {}
     });
   }
 }

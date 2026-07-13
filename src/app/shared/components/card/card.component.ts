@@ -25,8 +25,7 @@ export class CardComponent {
         this.added = true;
         setTimeout(() => this.added = false, 2000);
       },
-      error: (err: Error) => {
-        console.error(err);
+      error: () => {
         this.isAdding = false;
       }
     });

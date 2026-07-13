@@ -62,8 +62,7 @@ export class DetailsComponent implements OnInit {
           { name: res.data.title, url: `/details/${res.data.slug}/${res.data._id}` }
         ]));
       },
-      error: (err) => {
-        console.error(err);
+      error: () => {
         this.isLoading.set(false);
       },
     });

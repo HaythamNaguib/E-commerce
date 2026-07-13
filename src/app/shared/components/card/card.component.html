@@ -2,7 +2,7 @@
   <div class="cursor-pointer flex-1 flex flex-col" [routerLink]="['/details' , product.slug , product.id]">
     <!-- Image -->
     <div class="flex items-center justify-center h-[200px] bg-gray-50 rounded-lg overflow-hidden mb-3 group-hover/card:bg-gray-100 transition-colors duration-300">
-      <img [src]="product.imageCover" class="max-h-full max-w-full object-contain p-2 group-hover/card:scale-105 transition-transform duration-500" [alt]="product.title" />
+      <img [src]="product.imageCover" width="200" height="200" loading="lazy" class="max-h-full max-w-full object-contain p-2 group-hover/card:scale-105 transition-transform duration-500" [alt]="product.title" />
     </div>
 
     <!-- Category -->

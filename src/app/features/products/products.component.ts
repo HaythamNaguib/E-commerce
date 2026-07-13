@@ -35,19 +35,12 @@ export class ProductsComponent implements OnInit {
 
 
       next: (res) => {
-        console.log(res.data);
-
         this.productslist = res.data;
         this.pageSize = res.metadata.limit;
         this.p = res.metadata.currentPage;
         this.total = res.results;
-
       },
-
-      error: (err) => {
-        console.log(err)
-
-      },
+      error: () => {},
     });
 
   }

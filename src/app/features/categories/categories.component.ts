@@ -39,8 +39,7 @@ export class CategoriesComponent implements OnInit {
         this.categoriesList = res.data ?? [];
         this.isLoading = false;
       },
-      error: (err: Error) => {
-        console.error(err);
+      error: () => {
         this.isLoading = false;
       }
     });
@@ -63,8 +62,7 @@ export class CategoriesComponent implements OnInit {
         this.categoryProducts = res.data ?? [];
         this.productsLoading = false;
       },
-      error: (err: Error) => {
-        console.error(err);
+      error: () => {
         this.productsLoading = false;
       }
     });

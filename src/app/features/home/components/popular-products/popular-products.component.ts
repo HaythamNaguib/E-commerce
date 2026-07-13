@@ -22,15 +22,9 @@ export class PopularProductsComponent implements OnInit {
 
 
       next: (res) => {
-        console.log(res.data);
-
         this.productslist = res.data
       },
-
-      error: (err) => {
-        console.log(err)
-
-      },
+      error: () => {},
     });
 
   }

@@ -137,12 +137,7 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: this.siteName,
-      url: this.siteUrl,
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: `${this.siteUrl}/products`,
-        'query-input': 'required name=search_term_string'
-      }
+      url: this.siteUrl
     };
   }
 

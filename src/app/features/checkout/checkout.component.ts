@@ -88,20 +88,20 @@ export class CheckoutComponent implements OnInit {
           this.isSubmitting = false;
           this.checkoutForm.reset();
         },
-        error: (err: { error: { message: string } }) => {
-          this.errorMsg = err.error?.message ?? 'Something went wrong.';
-          this.isSubmitting = false;
-        }
-      });
-    } else {
-      this.checkoutService.onlineOrder(this.cartId, shippingAddress).subscribe({
-        next: (res: { session: { url: string } }) => {
-          this.isSubmitting = false;
-          window.location.href = res.session.url;
-        },
-        error: (err: { error: { message: string } }) => {
-          this.errorMsg = err.error?.message ?? 'Something went wrong.';
-          this.isSubmitting = false;
+      error: () => {
+        this.errorMsg = 'Something went wrong.';
+        this.isSubmitting = false;
+      }
+    });
+  } else {
+    this.checkoutService.onlineOrder(this.cartId, shippingAddress).subscribe({
+      next: (res: { session: { url: string } }) => {
+        this.isSubmitting = false;
+        window.location.href = res.session.url;
+      },
+      error: () => {
+        this.errorMsg = 'Something went wrong.';
+        this.isSubmitting = false;
         }
       });
     }
