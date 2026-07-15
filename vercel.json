@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --legacy-peer-deps",
-  "buildCommand": "ng build --configuration production && cp dist/E-commerce/browser/index.csr.html dist/E-commerce/browser/index.html",
+  "buildCommand": "ng build --configuration production",
   "outputDirectory": "dist/E-commerce/browser",
   "headers": [
     {
